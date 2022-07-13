@@ -1,23 +1,19 @@
 var express = require('express');
 var router = express.Router();
+
+// Get controller function
+const {getTestimonials} = require('../controllers/indexControllers')
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/organizations/1/public', (req, res, next) => {
 
-  // Petition test
-  const campos = {
-    name: 'Tomás',
-    img: "img.png",
-    phone: '3612536483',
-    address: 'san fernando 3522',
-    welcomeText: 'welcome to our organization'
-  }
+// Get the testimonials
+router.get('/organizations/1/public', getTestimonials)
 
-  res.json(campos)
 
-})
+
 
 module.exports = router;
