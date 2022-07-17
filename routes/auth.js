@@ -9,7 +9,15 @@ userValidationRules(),
 validate,
 register);
 
+/* POST user Login. */
+router.post('/login', 
+[userValidationRules()[2], userValidationRules()[3]],
+validate, 
+loginUser);
 
-router.post('/login', [userValidationRules()[2], userValidationRules()[3]], validate, loginUser);
+
+
+
+
 
 module.exports = router;
