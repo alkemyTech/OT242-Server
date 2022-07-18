@@ -1,9 +1,5 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-
-
 const getAuthProfile = (req, res, next)=>{
-    // Información del usuario autorizado obtenida 
+    // Información del usuario autorizado obtenida de el header Authorization (requiere feature/OT242-33)
     const userData = {
         firstName: 'Manuel',
         lastName: 'Bautista',
