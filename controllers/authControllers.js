@@ -26,6 +26,37 @@ const register = (req, res, next) => {
   }
 }
 
+
+const loginUser = async (req, res) => {
+    
+  const {email, password} = req.body
+
+  try {
+
+      // Verify if email exist
+      const users = await User.findOne({where: {email}})
+      
+      if(!users) {
+          
+          return res.status(403).json({ok: false})
+      }
+      
+      // Verify if password is correct
+      const equal = bcrypt.compareSync(password, users.password)
+  
+      if(!equal) return res.status(400).json({ok: false})
+      
+      res.json(users)
+      
+  } catch (error) {
+
+      console.log(error)
+      
+  }
+
+}
+
 module.exports = {
-  register
+  register,
+  loginUser,
 }
