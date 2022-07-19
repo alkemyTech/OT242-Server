@@ -1,5 +1,6 @@
 const {User} = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const register = (req, res, next) => {
   try{
@@ -46,7 +47,13 @@ const loginUser = async (req, res) => {
   
       if(!equal) return res.status(400).json({ok: false})
       
-      res.json(users)
+
+      jwt.sign({user: users}, 'secretKey', { expiresIn: '30d' }, (err, token) => {
+        res.json({
+            subject: users,
+            token: token
+        });
+      });
       
   } catch (error) {
 
