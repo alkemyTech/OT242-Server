@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const {getAuthProfile} = require('../controllers/profileControllers')
+const {getJWT} = require('../middlewares/jwtGenerator')
+const { jwtDecoder } = require('../middlewares/jwtDecoder')
 
-router.get('/me', getAuthProfile)
-
+router.get('/generate', getJWT)
+router.get('/me', jwtDecoder)
 module.exports = router
