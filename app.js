@@ -9,6 +9,7 @@ require('dotenv').config()
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const organizationRouter = require('./routes/organization');
+const emailNotificationRouter = require('./routes/emailNotification');
 
 const app = express();
 app.use(cors())
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/organizations', organizationRouter);
+app.use('/notification', emailNotificationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
