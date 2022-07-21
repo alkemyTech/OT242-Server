@@ -9,6 +9,15 @@ const userValidationRules = () => {
   ]
 }
 
+const entryValidationRules = () => {
+  return [
+    body('name').not().isEmpty().withMessage('Inserte un nombre').isLength({max: 20}).withMessage('El nombre no debe superar los 20 caracteres'),
+    body('content').not().isEmpty().withMessage('Inserte una descripcion'),
+    body('image').not().isEmpty().withMessage('Inserte una imagen'),
+    body('categoryId').not().isEmpty().withMessage('Indique la categoria'),
+  ]
+}
+
 const validate = (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -21,5 +30,6 @@ const validate = (req, res, next) => {
 
 module.exports = {
   userValidationRules,
+  entryValidationRules,
   validate
 }
