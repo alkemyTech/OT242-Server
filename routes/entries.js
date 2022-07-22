@@ -1,9 +1,8 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const {getDetail} = require('../controllers/entryControllers')
-
+const { getDetail } = require("../controllers/entryControllers");
 
 /* GET an entry detail */
-router.get('/novedad/:id', getDetail)
+router.get("/novedad/:id", getDetail);
 
 module.exports = router;
