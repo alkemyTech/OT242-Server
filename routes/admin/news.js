@@ -8,7 +8,7 @@ router.get(
   getEntries
 );
 
-router.post("/insert",
+router.post("/",
 entryValidationRules(),
 validate,
 insertEntry);

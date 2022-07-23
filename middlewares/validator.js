@@ -11,10 +11,10 @@ const userValidationRules = () => {
 
 const entryValidationRules = () => {
   return [
-    body('name').not().isEmpty().withMessage('Inserte un nombre').isLength({max: 20}).withMessage('El nombre no debe superar los 20 caracteres'),
-    body('content').not().isEmpty().withMessage('Inserte una descripcion'),
-    body('image').not().isEmpty().withMessage('Inserte una imagen'),
-    body('categoryId').not().isEmpty().withMessage('Indique la categoria'),
+    body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
+    body('content').exists().withMessage('content undefined').not().isEmpty().withMessage('Inserte una descripcion'),
+    body('image').exists().withMessage('Image undefined').not().isEmpty().withMessage('Inserte una imagen'),
+    body('categoryId').exists().withMessage('categoryId undefined').not().isEmpty().withMessage('Indique la categoria'),
   ]
 }
 
