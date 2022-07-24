@@ -63,7 +63,29 @@ const loginUser = async (req, res) => {
 
 }
 
+const deleteUser = async (req, res) => {
+    
+  const {id} = req.params
+
+  try {
+
+      const deletedUser = await User.destroy({where: {id}})
+      
+      if(!deletedUser) {
+          
+          return res.status(200).json({message: 'El usuario fué eliminado correctamente'})
+      }
+       
+  } catch (error) {
+
+      console.log(error)
+      
+  }
+
+}
+
 module.exports = {
   register,
   loginUser,
+  deleteUser
 }
