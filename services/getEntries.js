@@ -1,5 +1,5 @@
-const {Entry} = require('../models');
-const { getOptions } = require('./db');
+const {Entry} = require('../models/entry');
+const { getOptions } = require('./getOptions');
 
 /**
  * This function get the entries from the database based on the fields, values and attributes sent in the controller.
@@ -12,7 +12,7 @@ const { getOptions } = require('./db');
 
 const getEntries = async (fields = null, values = null, attributes = null) => {
   try {
-    const options = getOptions.apply(null, [fields, values, attributes]);
+    const options = getOptions(fields, values, attributes);
     const entries = await Entry.findAll(options);
     return entries;
   } catch (error) {
