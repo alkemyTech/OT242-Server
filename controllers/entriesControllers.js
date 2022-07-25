@@ -1,7 +1,7 @@
 const {Entry} = require('../models');
 const {getEntries} = require('../services/getEntries');
 
-const getEntries = async (req, res, next) => {
+const getAllEntries = async (req, res, next) => {
         let query = await getEntries();
    
         return res.status(200).json(query);
@@ -44,4 +44,4 @@ const insertEntry = (req, res, next) => {
 
 
 
-module.exports = { getEntries, insertEntry, getNews }
+module.exports = { getAllEntries, insertEntry, getNews }

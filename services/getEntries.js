@@ -1,4 +1,4 @@
-const {Entry} = require('../models/entry');
+const {Entry} = require('../models');
 const { getOptions } = require('./getOptions');
 
 /**
