@@ -1,17 +1,13 @@
 const { testimonials } = require("../models");
 
-const createTestimonial = async (req, res) => {
+const createTestimonial = async (req, res, next) => {
   const { name, image, content } = req.body;
 
   try {
-    if (!name || !image || !content) {
-      return res.status(400).json({ message: "Fill in all the fields." });
-    } else {
-      testimonials.create({ name, image, content });
-      return res.status(200).json({ message: "Testimonial added." });
-    }
+    testimonials.create({ name, image, content });
+    return res.status(200).json({ message: "Testimonial added." });
   } catch (err) {
-    return res.status(400).json(err);
+    next(err);
   }
 };
 
