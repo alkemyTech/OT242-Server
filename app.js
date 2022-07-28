@@ -13,10 +13,14 @@ const profileRouter = require('./routes/profile');
 const News = require('./routes/News');
 const newsRouter = require('./routes/admin/news');
 const entriesRouter = require('./routes/entries');
+const { application } = require('express');
+
+
+
 
 const app = express();
-app.use(cors())
 
+app.use(cors())
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
