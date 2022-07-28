@@ -10,7 +10,7 @@ const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const organizationRouter = require('./routes/organization');
 const profileRouter = require('./routes/profile');
-const detalleNovedad = require('./routes/detalleNovedad');
+const News = require('./routes/News');
 const newsRouter = require('./routes/admin/news');
 const entriesRouter = require('./routes/entries');
 
@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/news/:id', detalleNovedad);
+app.use('/news', News);
 app.use('/auth', authRouter);
 app.use('/organizations', organizationRouter);
 app.use('/auth', profileRouter);
