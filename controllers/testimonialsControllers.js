@@ -5,7 +5,7 @@ const createTestimonial = async (req, res) => {
 
   try {
     if (!name || !image || !content) {
-      return res.status(400).json({ message: "Complete todos los campos." });
+      return res.status(400).json({ message: "Fill in all the fields." });
     } else {
       testimonials.create({ name, image, content });
       return res.status(200).json({ message: "Testimonial added." });
