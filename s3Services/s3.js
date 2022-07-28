@@ -60,8 +60,11 @@ const deleteImg = async (req) => {
         Key: 'uploads/' + req.params.id,
     };
     await s3.deleteObject(params, function (err, data) {
-        if (err) console.log(err, err.stack);
-        else console.log(data);
+        if (err) {
+            let error = [err, err.stack];
+            return (error);
+        }
+        else return(data);
     });
 }
 module.exports = {
