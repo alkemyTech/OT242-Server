@@ -23,7 +23,7 @@ const contactsValidationRules = () => {
     body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
     body('email').exists().withMessage('Email undefined').isEmail().withMessage('El email debe tener formato válido'),
   ]
-}
+};
 
 const validate = (req, res, next) => {
     const errors = validationResult(req);
