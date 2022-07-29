@@ -4,7 +4,7 @@ var router = express.Router();
 
 // import de funciones a correr
 const { getActivities, insertActivity,} = require("../../controllers/activitiesController");
-//const { activityValidationRules, validate } = require('../../middlewares/validator');
+const { activityValidationRules, validate } = require('../../middlewares/validator');
 
 
 
@@ -18,9 +18,10 @@ router.get(
 
 // doy de alta la nueva actividad
 router.post("/",
-  //activityValidationRules(),
-  //validate,
-insertActivity);
+  activityValidationRules(),
+  validate,
+  insertActivity
+);
 
 
 
