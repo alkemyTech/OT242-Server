@@ -17,7 +17,7 @@ const insertActivity = (req, res, next) => {
       name,
       content,
       type:'activity',
-      createdAt: new Date
+      deletedAt: new Date
     });         
     return res.status(202).json({ message: 'Actividad almacenada exitosamente!'});  
   }
