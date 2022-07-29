@@ -6,12 +6,11 @@ var router = express.Router();
 const {contactsValidationRules, validate} = require('../middlewares/validator');
 
 
-/* POST /contacts verifico que contenga campos name y email */
-router.post('/contacts',
+/* POST verifico que contenga campos name y email y registro */
+router.post('/',   
   contactsValidationRules(),
   validate
 );
-
 
 
 module.exports = router;
