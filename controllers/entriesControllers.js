@@ -53,4 +53,35 @@ const updateEntry = async (req, res) => {
   };
 
 
-module.exports = { getEntries, insertEntry, updateEntry }
+
+
+  const deleteEntry  = async (req, res) => {
+    const deletednews = await Entry.findAll({ // busca el entry que se va a eliminar
+      where: { id: req.params.id },
+    });
+
+      if(deletednews) { // Si existe entonces lo borra
+
+        try {
+          await Entry.destroy({where: { id: req.params.id}})
+          
+        } catch (error) {
+          
+          console.log(error)
+          
+        }
+        
+        res.json({msg: 'it was deleted'})
+
+    }else{
+
+      return res.json({msg: 'the entrie isnt exists'})
+
+    }
+  }
+
+
+
+
+
+module.exports = { getEntries, insertEntry, updateEntry, deleteEntry }
