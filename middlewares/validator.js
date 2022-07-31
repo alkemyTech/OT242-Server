@@ -18,6 +18,13 @@ const entryValidationRules = () => {
   ]
 }
 
+const activityValidationRules = () => {
+  return [
+    body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
+    body('content').exists().withMessage('Content undefined').not().isEmpty().withMessage('Inserte una descripcion'),
+  ]
+};
+
 const validate = (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -31,5 +38,6 @@ const validate = (req, res, next) => {
 module.exports = {
   userValidationRules,
   entryValidationRules,
+  activityValidationRules,
   validate
 }
