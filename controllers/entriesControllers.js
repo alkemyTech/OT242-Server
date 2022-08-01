@@ -63,33 +63,27 @@ const updateEntry = async (req, res) => {
   };
 
 
-
-
   const deleteEntry  = async (req, res) => {
-    const deletednews = await Entry.findAll({ // find the entry to be deleted 
+    const deletednews = await Entry.findOne({ // find the entry to be deleted 
       where: { id: req.params.id },
     });
 
       if(deletednews) { // If it exists then delete it
 
-        try {
-          await Entry.destroy({where: { id: req.params.id}})
-          
-        } catch (error) {
-          
-          console.log(error)
-          
-        }
-        
+      try {
+
+        await Entry.destroy({where: { id: req.params.id}})
         res.json({msg: 'it was deleted'})
-
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
     }else{
-
+      
       return res.json({msg: 'the news does not exist'})
-
-    }
   }
-
+}
 
 
 
