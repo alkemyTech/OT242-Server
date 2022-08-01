@@ -62,5 +62,30 @@ const updateEntry = async (req, res) => {
     }
   };
 
-module.exports = { getAllEntries, insertEntry, getNews, updateEntry }
 
+  const deleteEntry  = async (req, res) => {
+    const newsExists = await Entry.findOne({ // find the entry to be deleted 
+      where: { id: req.params.id },
+    });
+
+      if(newsExists) { // If it exists then delete it
+
+      try {
+
+        await Entry.destroy({where: { id: req.params.id}})
+        res.json({msg: 'it was deleted'})
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }else{
+      
+      return res.json({msg: 'the news does not exist'})
+  }
+}
+
+
+
+
+module.exports = { getEntries, insertEntry, updateEntry,getNews, deleteEntry }
