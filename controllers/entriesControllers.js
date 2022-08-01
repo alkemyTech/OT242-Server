@@ -64,11 +64,11 @@ const updateEntry = async (req, res) => {
 
 
   const deleteEntry  = async (req, res) => {
-    const deletednews = await Entry.findOne({ // find the entry to be deleted 
+    const newsExists = await Entry.findOne({ // find the entry to be deleted 
       where: { id: req.params.id },
     });
 
-      if(deletednews) { // If it exists then delete it
+      if(newsExists) { // If it exists then delete it
 
       try {
 
