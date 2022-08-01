@@ -4,7 +4,7 @@ var router = express.Router();
 const {getOrganizationData } = require('../controllers/organizationControllers')
 
 // Get the organization
-router.get('/1/public', getOrganizationData)
+router.get('/:id/public', getOrganizationData)
 
 
 

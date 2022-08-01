@@ -1,11 +1,12 @@
 var express = require("express");
 var router = express.Router();
-const { getEntries, insertEntry, deleteEntry} = require("../../controllers/entriesControllers");
+const { getEntries, insertEntry, deleteEntry, getNews} = require("../../controllers/entriesControllers");
 const { entryValidationRules, validate } = require('../../middlewares/validator');
 
+// Get the news
 router.get(
   "/",
-  getEntries
+  getNews
 );
 
 router.post("/",
