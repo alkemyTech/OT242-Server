@@ -1,23 +1,20 @@
-// Get the testimonials
+const { Organization } = require("../models");
+
 const getOrganizationData = async (req, res) => {
-    
-    // Petition test
-  const campos = {
-    name: 'Tomás',
-    img: "img.png",
-    phone: '3612536483',
-    address: 'san fernando 3522',
-    welcomeText: 'welcome to our organization'
+  try {
+    let query = await Organization.findAll({
+      where: { id: req.params.id },
+    });
+    if (query != '') {
+      res.status(200).json(query);
+    } else {
+      res.status(404).json({ message: "Organización inexistente." });
+    }
+  } catch (err) {
+    res.status(400).json({ message: "Ocurrió un error inesperado." });
   }
-
-
-  res.json(campos)
-
-}
-
-
+};
 
 module.exports = {
-    getOrganizationData,
-}
-
+  getOrganizationData,
+};

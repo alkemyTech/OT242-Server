@@ -1,11 +1,21 @@
 const {Entry} = require('../models');
+const {getEntries} = require('../services/getEntries');
 
-
-const getEntries = async (req, res, next) => {
-        let query = await Entry.findAll();
+const getAllEntries = async (req, res, next) => {
+        let query = await getEntries();
    
         return res.status(200).json(query);
   };
+
+
+const getNews = async (req,res,next) => {
+  try{
+    const news = await getEntries(['type'], ['news'], ['name', 'image', 'createdAt']);
+    return res.status(200).json(news);
+  }catch(err){
+    next(err);
+  }
+}
 
 
 const insertEntry = (req, res, next) => {
@@ -52,5 +62,5 @@ const updateEntry = async (req, res) => {
     }
   };
 
+module.exports = { getAllEntries, insertEntry, getNews, updateEntry }
 
-module.exports = { getEntries, insertEntry, updateEntry }
