@@ -13,10 +13,8 @@ const profileRouter = require('./routes/profile');
 const News = require('./routes/News');
 const newsRouter = require('./routes/admin/news');
 const entriesRouter = require('./routes/entries');
+const userRouter = require('./routes/admin/users');
 const { application } = require('express');
-
-
-
 
 const app = express();
 
@@ -38,6 +36,7 @@ app.use('/organizations', organizationRouter);
 app.use('/auth', profileRouter);
 app.use('/admin/news', newsRouter);
 app.use('/', entriesRouter);
+app.use('/users', userRouter);
 
 
 // catch 404 and forward to error handler
