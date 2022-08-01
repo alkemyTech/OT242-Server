@@ -17,4 +17,4 @@ const updateActivity = async (req, res) => {
 };
 
 
-module.exports = { getActivities, insertActivity, updateActivity } 
+module.exports = { updateActivity } 
