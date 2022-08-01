@@ -56,11 +56,11 @@ const updateEntry = async (req, res) => {
 
 
   const deleteEntry  = async (req, res) => {
-    const deletednews = await Entry.findAll({ // busca el entry que se va a eliminar
+    const deletednews = await Entry.findAll({ // find the entry to be deleted 
       where: { id: req.params.id },
     });
 
-      if(deletednews) { // Si existe entonces lo borra
+      if(deletednews) { // If it exists then delete it
 
         try {
           await Entry.destroy({where: { id: req.params.id}})
@@ -75,7 +75,7 @@ const updateEntry = async (req, res) => {
 
     }else{
 
-      return res.json({msg: 'the entrie isnt exists'})
+      return res.json({msg: 'the news does not exist'})
 
     }
   }
