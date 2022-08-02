@@ -19,7 +19,6 @@ const insertContact = (req, res, next) => {
       phone,
       email,
       message,
-      type:'contact',
       deletedAt: new Date
     });
                 
