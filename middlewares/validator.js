@@ -18,6 +18,12 @@ const entryValidationRules = () => {
   ]
 }
 
+const contactsValidationRules = () => {
+  return [
+    body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
+    body('email').exists().withMessage('Email undefined').isEmail().withMessage('El email debe tener formato válido'),
+  ]
+};
 const testimonialsValidationRules = () => {
   return [
     body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
@@ -39,6 +45,7 @@ const validate = (req, res, next) => {
 module.exports = {
   userValidationRules,
   entryValidationRules,
+  contactsValidationRules,
   testimonialsValidationRules,
   validate
 }
