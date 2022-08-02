@@ -3,9 +3,9 @@ const { Contacts } = require('../models');
 
 
 const getContacts = async (req, res, next) => {
-  let query = await Contacts.findAll();
+  let contactsList = await Contacts.findAll();
 
-  return res.status(200).json(query);
+  return res.status(202).json(contactsList);
 };
 
 

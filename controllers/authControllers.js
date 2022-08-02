@@ -20,7 +20,7 @@ const register = (req, res, next) => {
         email,
         password: hashedPassword
       })
-      res.status(201).json(user);
+      res.redirect(307, '/auth/login');
     });
   }catch(err){
     next(err);
