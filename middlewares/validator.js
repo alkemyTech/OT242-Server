@@ -17,7 +17,12 @@ const entryValidationRules = () => {
     body('categoryId').exists().withMessage('categoryId undefined').not().isEmpty().withMessage('Indique la categoria'),
   ]
 }
-
+const activityValidationRules = () => {
+  return [
+    body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
+    body('content').exists().withMessage('Content undefined').not().isEmpty().withMessage('Inserte una descripcion'),
+  ]
+};
 const contactsValidationRules = () => {
   return [
     body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
@@ -45,6 +50,7 @@ const validate = (req, res, next) => {
 module.exports = {
   userValidationRules,
   entryValidationRules,
+  activityValidationRules,
   contactsValidationRules,
   testimonialsValidationRules,
   validate
