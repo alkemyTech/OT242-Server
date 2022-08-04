@@ -14,10 +14,11 @@ const profileRouter = require('./routes/profile');
 const News = require('./routes/News');
 const newsRouter = require('./routes/admin/news');
 const entriesRouter = require('./routes/entries');
-const activitiesRouter = require('./routes/admin/activities');
+//const activitiesRouter = require('./routes/admin/activities');
 const contactsRouter = require('./routes/contacts');
 const testimonialsRouter = require('./routes/testimonials');
 const userRouter = require('./routes/admin/users');
+const categories = require('./routes/categories');
 
 const app = express();
 
@@ -39,10 +40,11 @@ app.use('/organizations', organizationRouter);
 app.use('/auth', profileRouter);
 app.use('/admin/news', newsRouter);
 app.use('/', entriesRouter);
-app.use('/admin/activities', activitiesRouter);
+//app.use('/admin/activities', activitiesRouter);
 app.use('/contacts', contactsRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/users', userRouter);
+app.use('/categories', categories);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
