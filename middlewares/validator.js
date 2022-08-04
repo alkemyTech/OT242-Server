@@ -17,11 +17,16 @@ const entryValidationRules = () => {
     body('categoryId').exists().withMessage('categoryId undefined').not().isEmpty().withMessage('Indique la categoria'),
   ]
 }
-
 const activityValidationRules = () => {
   return [
     body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
     body('content').exists().withMessage('Content undefined').not().isEmpty().withMessage('Inserte una descripcion'),
+  ]
+};
+const contactsValidationRules = () => {
+  return [
+    body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
+    body('email').exists().withMessage('Email undefined').isEmail().withMessage('El email debe tener formato válido'),
   ]
 };
 const testimonialsValidationRules = () => {
@@ -46,6 +51,7 @@ module.exports = {
   userValidationRules,
   entryValidationRules,
   activityValidationRules,
+  contactsValidationRules,
   testimonialsValidationRules,
   validate
 }
