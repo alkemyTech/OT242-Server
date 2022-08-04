@@ -1,19 +1,34 @@
-const {contacts} = require('../models');
+const { Contacts } = require('../models');
 
 
-const getContacts = async (req, res) => {
-        try {
-       
-            let contactsList = await contacts.findAll();
-                     
-            return res.status(202).json(contactsList);
-            
-        }
-    
-        catch (error) {
-            return res.status(400).json(error);
-    
-        };
+
+const getContacts = async (req, res, next) => {
+  let contactsList = await Contacts.findAll();
+
+  return res.status(202).json(contactsList);
+};
+
+
+const insertContact = (req, res, next) => {
+  
+  const { name, phone, email, message } = req.body;
+
+  try {
+    const contact = Contacts.create({
+      name,
+      phone,
+      email,
+      message,
+      deletedAt: new Date
+    });
+                
+    return res.status(202).json({ message: 'Datos de contacto almacenados exitosamente!'});     
+  }
+
+  catch (error) {
+    return res.status(400).json(error);
+
   };
+};
 
-  module.exports = { getContacts }
+module.exports = { getContacts, insertContact }

@@ -14,6 +14,8 @@ router.post("/",
   insertActivity
 );
 
-
+router.patch("/:id", activityValidationRules(), validate, updateActivity);
 
 module.exports = router;
+
+

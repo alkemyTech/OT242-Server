@@ -18,7 +18,6 @@ const activitiesRouter = require('./routes/admin/activities');
 const contactsRouter = require('./routes/contacts');
 const testimonialsRouter = require('./routes/testimonials');
 const userRouter = require('./routes/admin/users');
-const { application } = require('express');
 
 const app = express();
 
