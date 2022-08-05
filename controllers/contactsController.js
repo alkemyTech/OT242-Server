@@ -1,4 +1,5 @@
 const { Contacts } = require('../models');
+const sendEmail = require('../services/sendEmailNotification');
 
 
 
@@ -9,18 +10,20 @@ const getContacts = async (req, res, next) => {
 };
 
 
-const insertContact = (req, res, next) => {
+const insertContact = async (req, res, next) => {
   
   const { name, phone, email, message } = req.body;
-
+  
   try {
     const contact = Contacts.create({
-      name,
-      phone,
-      email,
-      message,
-      deletedAt: new Date
-    });
+        name,
+        phone,
+        email,
+        message,
+        deletedAt: new Date
+      });
+      
+    await sendEmail(email)
                 
     return res.status(202).json({ message: 'Datos de contacto almacenados exitosamente!'});     
   }

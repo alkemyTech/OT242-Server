@@ -9,6 +9,9 @@ const sendEmail = async (email) => {
         auth: {
             user: 'vladimir66@ethereal.email',
             pass: '5Xwc3u1pVCCSe1e1gN'
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     });
 
@@ -26,6 +29,8 @@ const sendEmail = async (email) => {
 
     // Preview only available when sending through an Ethereal account
     console.log("Preview URL: ", nodemailer.getTestMessageUrl(msg));
+
+    console.log("Email enviado con exito")
 
 }
 
