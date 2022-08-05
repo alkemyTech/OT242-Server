@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test":"mocha"
+    "test": "mocha"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.135.0",

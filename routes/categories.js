@@ -1,8 +1,16 @@
 var express = require("express");
 var router = express.Router();
-const { getCategoriesByName } = require("../controllers/categoriesControllers");
+const { categoriesValidationRules, validate } = require('../middlewares/validator');
+const { insertCategory, getCategoriesNames } = require("../controllers/categoriesController");
 
-/* GET A CATEGORIES LIST BY NAME */
-router.get("/", getCategoriesByName);
+/* GET CATEGORIES NAMES */
+router.get("/", getCategoriesNames);
+
+
+router.post("/",
+categoriesValidationRules(),
+validate,
+insertCategory);
+
 
 module.exports = router;

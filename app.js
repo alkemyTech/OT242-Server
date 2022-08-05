@@ -6,6 +6,7 @@ const logger = require('morgan');
 const cors = require('cors')
 require('dotenv').config()
 
+
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const organizationRouter = require('./routes/organization');
@@ -39,7 +40,7 @@ app.use('/organizations', organizationRouter);
 app.use('/auth', profileRouter);
 app.use('/admin/news', newsRouter);
 app.use('/', entriesRouter);
-app.use('/activities', activitiesRouter);
+app.use('/admin/activities', activitiesRouter);
 app.use('/contacts', contactsRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/users', userRouter);
