@@ -10,7 +10,8 @@ const getAllEntries = async (req, res, next) => {
 
 const getNews = async (req,res,next) => {
   try{
-    const news = await getEntries(['type'], ['news'], ['name', 'image', 'createdAt']);
+    const news = await getEntries(['type'], ['news'], ['id', 'name', 'image', 'createdAt']);
+    console.log(news)
     return res.status(200).json(news);
   }catch(err){
     next(err);
@@ -85,7 +86,20 @@ const updateEntry = async (req, res) => {
   }
 }
 
+const findEntry = async (req, res) => {
+  const id = req.params.id
+  try {
+    const entries = await Entry.findOne({where: { id }})
+    console.log(entries)
+    return res.json(entries)
+   
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ error: 'Something went wrong' })
+  }
+}
 
 
 
-module.exports = { getEntries, insertEntry, updateEntry,getNews, deleteEntry }
+
+module.exports = { getEntries, insertEntry, updateEntry, getNews, deleteEntry, findEntry }
