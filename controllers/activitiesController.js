@@ -19,7 +19,7 @@ const insertActivity = (req, res, next) => {
 };
 
 
-module.exports = { insertActivity }
+
 const {getActivities: getAll, getActivity: get, updateActivity:update} = require('../services/activities');
 
 const updateActivity = async (req, res) => {
@@ -38,4 +38,4 @@ const updateActivity = async (req, res) => {
 };
 
 
-module.exports = { updateActivity } 
+module.exports = { insertActivity, updateActivity } 

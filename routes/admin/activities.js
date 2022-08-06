@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 // import de funciones a correr
-const { insertActivity } = require("../../controllers/activitiesController");
+const { insertActivity, updateActivity } = require('./../../controllers/activitiesController');
 const { activityValidationRules, validate } = require('../../middlewares/validator');
 
 
