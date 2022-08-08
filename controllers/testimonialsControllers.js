@@ -60,6 +60,13 @@ const updateTestimonial = async (req, res) => {
   }
 };*/
 
+const getTestimonials = async (req, res)=>{
+try{
+  let query = await Testimonials.findAll()
+  return res.status(200).json(query)
+}catch(err){
+  res.status(400).json(err)
+}
+}
 
-
-module.exports = { createTestimonial, updateTestimonial };
+module.exports = { createTestimonial, updateTestimonial, getTestimonials };
