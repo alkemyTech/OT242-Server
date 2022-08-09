@@ -7,4 +7,6 @@ const {membersValidationRules, validate} = require('../middlewares/validator');
 
 router.post('/', membersValidationRules(), validate, membersController.createMember); // Create member
 
+router.get('/', membersController.listMembers); // List members
+
 module.exports = router;

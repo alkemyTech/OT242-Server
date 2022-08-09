@@ -1,7 +1,7 @@
 const {members} = require('../models');
 
 
-const createMember = (req, res, next) => {
+const createMember = (req, res) => {
         try {
        
             const member = members.create({
@@ -18,11 +18,24 @@ const createMember = (req, res, next) => {
             return res.status(400).json(error);
     
         };
+};
+
+const listMembers = async (req, res) => {
+    try {
+       
+        let membersList = await members.findAll();
+                 
+        return res.status(200).json(membersList);
+        
+    }
+
+    catch (error) {
+        return res.status(400).json(error);
+
     };
+}
 
 
 
 
-
-
-module.exports = { createMember }
+module.exports = { createMember, listMembers }
