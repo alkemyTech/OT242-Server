@@ -6,6 +6,9 @@ const logger = require('morgan');
 const cors = require('cors')
 require('dotenv').config()
 
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const SwaggerOPtions = require("./swaggerOptions");
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
@@ -17,10 +20,13 @@ const contactsRouter = require('./routes/contacts');
 const testimonialsRouter = require('./routes/testimonials');
 const userRouter = require('./routes/admin/users');
 const categoriesRouter = require('./routes/categories')
+const membersRouter = require('./routes/members')
 
 const app = express();
 
 app.use(cors())
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -30,6 +36,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+const specs = swaggerJsDoc(SwaggerOPtions);
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
@@ -41,6 +50,9 @@ app.use('/contacts', contactsRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/users', userRouter);
 app.use('/categories', categoriesRouter)
+app.use('/members', membersRouter)
+
+app.use('/docs',swaggerUi.serve, swaggerUi.setup(specs))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
