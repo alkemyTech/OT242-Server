@@ -49,10 +49,12 @@ app.use('/admin/activities', activitiesRouter);
 app.use('/contacts', contactsRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/users', userRouter);
+
 app.use('/categories', categoriesRouter)
 app.use('/members', membersRouter)
 
 app.use('/docs',swaggerUi.serve, swaggerUi.setup(specs))
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

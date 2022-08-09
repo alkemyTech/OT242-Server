@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const membersController = require('../controllers/membersController');
-
 const { membersValidationRules, validate } = require('../middlewares/validator');
 
 /**
