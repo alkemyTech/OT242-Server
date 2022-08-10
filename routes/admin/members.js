@@ -109,11 +109,11 @@ router.post('/', membersValidationRules(), validate, membersController.createMem
  *              $ref: '#/components/schemas/MemberNotFound'
  *
  */
-router.put('/:id', membersController.updateMember)
+router.put('/:id', membersController.updateMember);
 
 
 /* Eliminacion de miembros */
-//router.delete('/:id', /* deleteMember */);
+router.delete('/:id', membersController.deleteMember);
 
 
 module.exports = router; 

@@ -39,5 +39,29 @@ const updateMember = async (req, res) => {
     };
 }
 
-module.exports = { createMember, updateMember } 
+const deleteMember  = async (req, res) => {
+
+    const memberId = req.params.id;
+
+    const memberExists = await members.findOne({ // search member via id 
+      where: { id: memberId },
+    });
+
+    if(memberExists) { // If it exists, then delete it
+        
+      try {
+        await members.destroy({where: { id: memberId}});
+        res.json({msg: 'member with id:' + memberId + ' has been deleted'});
+        
+      } catch (error) {
+        console.log(error);
+      }
+
+    } else {
+      
+      return res.json({msg: 'There is no member with id:' + memberId})
+  }
+}
+
+module.exports = { createMember, updateMember, deleteMember }; 
 
