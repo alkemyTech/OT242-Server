@@ -1,8 +1,8 @@
 const express = require("express");
-const router = express.Router();
+var router = express.Router();
 
-const membersController = require('../controllers/membersController');
-const { membersValidationRules, validate } = require('../middlewares/validator');
+const membersController = require('../../controllers/membersController');
+const { membersValidationRules, validate } = require('../../middlewares/validator');
 
 /**
  * @swagger
@@ -110,5 +110,10 @@ router.post('/', membersValidationRules(), validate, membersController.createMem
  *
  */
 router.put('/:id', membersController.updateMember)
+
+
+/* Eliminacion de miembros */
+//router.delete('/:id', /* deleteMember */);
+
 
 module.exports = router; 
