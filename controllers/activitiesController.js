@@ -20,7 +20,7 @@ const insertActivity = (req, res, next) => {
 
 
 
-const {getActivities: getAll, getActivity: get, updateActivity:update} = require('../services/activities');
+const {getActivities: getAll, getActivity: get, updateActivity:update, getActivity} = require('../services/activities');
 
 const updateActivity = async (req, res) => {
   try {
@@ -37,5 +37,15 @@ const updateActivity = async (req, res) => {
   }
 };
 
+const getActivyDetail = async (req, res)=> {
+  const {id} = req.params
+  try{
+    const query = await getActivity(id)
+    res.status(200).json(query)
+    
+  }catch(error){
 
-module.exports = { insertActivity, updateActivity } 
+    res.status(400).json(error)
+  }
+}
+module.exports = { insertActivity, updateActivity, getActivyDetail } 
