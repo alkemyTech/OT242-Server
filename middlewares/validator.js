@@ -52,14 +52,6 @@ const membersValidationRules = () => {
   ]
 };
 
-
-const membersValidationRules = () => {
-  return [
-    body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
-    body('name').isString(),
-  ]
-};
-
 const validate = (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
