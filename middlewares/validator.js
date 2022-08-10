@@ -45,6 +45,13 @@ const categoriesValidationRules = () => {
     body('name').isString(),
   ]
 };
+const membersValidationRules = () => {
+  return [
+    body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
+    body('name').isString(),
+  ]
+};
+
 
 const membersValidationRules = () => {
   return [
