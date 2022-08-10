@@ -33,6 +33,7 @@ npm start
 
 #### standard user format:
 
+```
 {
 firstName: 'Standard',
 lastName: '<number of standard user>', // it will be a number in string datatype
@@ -43,9 +44,11 @@ roleId: 2,
 createdAt: 2022-08-10 22:41:15, // example date
 updatedAt: 2022-08-10 22:41:15 // example date
 }
+```
 
 #### regular user format:
 
+```
 {
 firstName: 'Regular',
 lastName: '<number of regular user>', // it will be a number in string datatype
@@ -56,3 +59,4 @@ roleId: 2,
 createdAt: 2022-08-10 22:41:15, // example date
 updatedAt: 2022-08-10 22:41:15 // example date
 }
+```
