@@ -1,8 +1,24 @@
 const express = require("express");
 const router = express.Router();
+const {members} = require('../models');
 
 const membersController = require('../controllers/membersController');
 const { membersValidationRules, validate } = require('../middlewares/validator');
+
+
+
+
+const getMembers = async (req, res, next) => {
+    let contactsList = await members.findAll();
+  
+    return res.status(202).json(contactsList);
+  };
+  
+router.get(
+    "/",
+    getMembers
+  );
+  
 
 /**
  * @swagger
