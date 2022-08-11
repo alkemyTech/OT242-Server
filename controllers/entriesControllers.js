@@ -2,8 +2,7 @@ const {Entry} = require('../models');
 const {getEntries} = require('../services/getEntries');
 
 const getAllEntries = async (req, res, next) => {
-        let query = await getEntries();
-   
+        const query = await Entry.findAll();
         return res.status(200).json(query);
   };
 
@@ -102,4 +101,4 @@ const findEntry = async (req, res) => {
 
 
 
-module.exports = { getEntries, insertEntry, updateEntry, getNews, deleteEntry, findEntry }
+module.exports = { getEntries, insertEntry, updateEntry, getNews, deleteEntry, findEntry, getAllEntries }
