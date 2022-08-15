@@ -47,7 +47,33 @@ describe('Activities Test', function() {
             done();
             });
     }),
-    it("It should NOT POST an Activity", (done) => {
+    it("It should POST an Activity without image", (done) => {
+        const activity = {
+            name: 'test', content: 'test-content'
+        };
+        chai.request(server)                
+            .post("/admin/activities/")
+            .send(activity)
+            .end((err, response) => {
+                response.should.have.status(202);
+            done();
+            });
+    }),
+    it("It should NOT POST an Activity - name not defined", (done) => {
+        const activity = {
+            image: "image-test", content: 'Test-content'
+        };
+        chai.request(server)                
+            .post("/admin/activities/")
+            .send(activity)
+            .end((err, response) => {
+                response.should.have.status(400);
+                response.body.should.be.a('object');
+                response.body.should.have.property('errors');
+            done();
+            });
+    }),
+    it("It should NOT POST an Activity - Content not defined", (done) => {
         const activity = {
             name: 'test', image: "image-test"
         };
