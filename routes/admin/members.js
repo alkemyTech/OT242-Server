@@ -1,8 +1,8 @@
 const express = require("express");
 
 const router = express.Router();
-const membersController = require('../controllers/membersController');
-const { membersValidationRules, validate } = require('../middlewares/validator');
+const membersController = require('../../controllers/membersController');
+const { membersValidationRules, validate } = require('../../middlewares/validator');
 
 router.get('/', membersController.listMembers); // List members
 

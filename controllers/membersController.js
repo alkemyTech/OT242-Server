@@ -77,7 +77,9 @@ const deleteMember  = async (req, res) => {
       
       return res.json({msg: 'There is no member with id:' + memberId})
   }
-}
+};
+
+
 
 module.exports = { createMember, listMembers, updateMember, deleteMember }; 
 
