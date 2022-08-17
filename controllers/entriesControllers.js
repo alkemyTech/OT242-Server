@@ -10,7 +10,6 @@ const getAllEntries = async (req, res, next) => {
 const getNews = async (req,res,next) => {
   try{
     const news = await getEntries(['type'], ['news'], ['id', 'name', 'image', 'createdAt']);
-    console.log(news)
     return res.status(200).json(news);
   }catch(err){
     next(err);
@@ -88,13 +87,17 @@ const updateEntry = async (req, res) => {
 const findEntry = async (req, res) => {
   const id = req.params.id
   try {
-    const entries = await Entry.findOne({where: { id }})
-    console.log(entries)
-    return res.json(entries)
+    const entry = await Entry.findOne({where: { id }})
+
+    if(entry != null){
+      return res.status(200).json(entry)
+    }else{
+      return res.status(404).json({ message: 'Novedad no existe' })
+    }
+    
    
   } catch (err) {
-    console.log(err)
-    return res.status(500).json({ error: 'Something went wrong' })
+    return res.status(404).json({ error: 'Something went wrong' })
   }
 }
 
