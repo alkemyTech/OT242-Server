@@ -40,12 +40,17 @@ const updateActivity = async (req, res) => {
 const getActivyDetail = async (req, res)=> {
   const {id} = req.params
   try{
-    const query = await getActivity(id)
+    const query = await Activity.findOne({where: {id}
+    });
+    if(!query || query == null) {
+          
+      return res.status(404).json({message: 'La actividad solicitada no existe'})
+  }
     res.status(200).json(query)
-    
-  }catch(error){
 
-    res.status(400).json(error)
+  }catch(err){
+
+    res.status(400).json(err)
   }
 }
 module.exports = { insertActivity, updateActivity, getActivyDetail } 

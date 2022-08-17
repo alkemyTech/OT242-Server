@@ -17,6 +17,7 @@ router.post("/",
 router.patch("/:id", activityValidationRules(), validate, updateActivity);
 
 router.get("/:id", getActivyDetail);
+
 module.exports = router;
 
 
