@@ -19,12 +19,12 @@ const activitiesRouter = require('./routes/admin/activities');
 const contactsRouter = require('./routes/contacts');
 const testimonialsRouter = require('./routes/testimonials');
 const userRouter = require('./routes/admin/users');
-const categoriesRouter = require('./routes/categories')
-const membersRouter = require('./routes/members')
+const categoriesRouter = require('./routes/categories');
+const membersRouter = require('./routes/admin/members');
 
 const app = express();
 
-app.use(cors())
+app.use(cors());
 
 
 // view engine setup
@@ -49,9 +49,8 @@ app.use('/admin/activities', activitiesRouter);
 app.use('/contacts', contactsRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/users', userRouter);
-
-app.use('/categories', categoriesRouter)
-app.use('/members', membersRouter)
+app.use('/categories', categoriesRouter);
+app.use('/admin/members', membersRouter);
 
 app.use('/docs',swaggerUi.serve, swaggerUi.setup(specs))
 
