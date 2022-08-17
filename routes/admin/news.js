@@ -1,4 +1,5 @@
 var express = require("express");
+const { body } = require("express-validator");
 var router = express.Router();
 const { getEntries, insertEntry, deleteEntry, getNews, updateEntry, findEntry, getAllEntries } = require("../../controllers/entriesControllers");
 const { entryValidationRules, validate } = require('../../middlewares/validator');

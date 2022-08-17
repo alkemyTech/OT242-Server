@@ -17,30 +17,6 @@ const getNews = async (req, res, next) => {
     next(err);
   }
 }
-
-/*
-app.post("/s3/upload", upload.array("file"), async (req, res) => {
-  try {
-      const results = await UploadImg(req.files);
-      console.log(results);
-      return res.json({ status: "success" });
-  } catch (err) {
-      console.log(err);
-  }
-});
-*/
-/*
-{
-  const { name, content, image, categoryId } = req.body;
-  console.log(req.body);
-  try {
-    const results = await UploadImg(req.image);
-    console.log(results);
-    return res.json({ status: "success" });
-  } catch (err) {
-    console.log(err);
-  }
-*/
 const insertEntry = async (req, res, next) => {
   const { name, content, categoryId } = req.body;
   try {
@@ -55,30 +31,33 @@ const insertEntry = async (req, res, next) => {
     })
     return res.status(202).json({ message: 'Datos almacenados exitosamente!' });
   } catch (err) {
-    console.log(err);
+    res.status(404).json({ message: "ERROR intentelo mas tarde" });
   }
 };
 
 const updateEntry = async (req, res) => {
+  const { name, content, categoryId } = req.body;
   try {
-    await Entry.update(req.body, {
+    const results = await UploadImg(req.files);
+    const updateResult = await Entry.update({
+      name,
+      content,
+      image: results[0].key,
+      categoryId,
+      updateAt: new Date
+    }, {
       where: { id: req.params.id },
     });
+    if(updateResult[0] === 0) {
+      throw ({message: 'No existe una novedad con este id', status: 404});
 
-    const updatedEntry = await Entry.findAll({ // busca el entry actualizado
-      where: { id: req.params.id },
-    });
-    if (updatedEntry != "") {
-      // Si el entry existe responde con el entry actualizado
-      res.status(200).json({ message: "OK novedad actualizada", novedad: updatedEntry[0] });
     } else {
-      throw new Error(); // si el entry no existe levanta un error
+      return res.status(200).json({ message: "OK novedad actualizada", novedad: updateResult[0] });
     }
   } catch (err) {
-    res.status(404).json({ message: "ERROR novedad inexistente" });
+    res.status(404).json({ message: "ERROR intentelo mas tarde" });
   }
 };
-
 
 const deleteEntry = async (req, res) => {
   const newsExists = await Entry.findOne({ // find the entry to be deleted 
@@ -90,7 +69,7 @@ const deleteEntry = async (req, res) => {
     try {
 
       await Entry.destroy({ where: { id: req.params.id } })
-      res.json({ msg: 'it was deleted' })
+      res.json({ msg: 'Eliminado correctamente' });
 
     } catch (error) {
       console.log(error)
@@ -98,7 +77,7 @@ const deleteEntry = async (req, res) => {
     }
   } else {
 
-    return res.json({ msg: 'the news does not exist' })
+    return res.json({ msg: 'La novedad no existe' })
   }
 }
 
@@ -111,7 +90,7 @@ const findEntry = async (req, res) => {
 
   } catch (err) {
     console.log(err)
-    return res.status(500).json({ error: 'Something went wrong' })
+    return res.status(500).json({ error: 'ERROR intentelo mas tarde' })
   }
 }
 
