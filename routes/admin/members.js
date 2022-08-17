@@ -8,7 +8,7 @@ router.get('/', membersController.listMembers); // List members
 
 router.post('/', membersValidationRules(), validate, membersController.createMember); //Create member
 
-router.put('/:id', membersController.updateMember);
+router.put('/:id', membersValidationRules(), validate, membersController.updateMember);
 
 
 /* Eliminacion de miembros */
