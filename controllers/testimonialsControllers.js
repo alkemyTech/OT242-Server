@@ -60,7 +60,7 @@ const updateTestimonial = async (req, res) => {
   }
 };*/
 
-//export default Header;
+export default Header;
 
 const getTestimonials = async (req, res) => {
 

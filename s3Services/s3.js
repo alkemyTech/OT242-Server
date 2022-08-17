@@ -51,9 +51,6 @@ const VerifyMulterError = (error) => {
             er = "File must be an image"
         }
     }
-    if(er == ""){
-        next();
-    }
     return er;
 }
 
