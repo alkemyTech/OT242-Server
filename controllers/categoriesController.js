@@ -23,7 +23,7 @@ const insertCategory = (req, res) => {
 const getCategoriesNames = async (req, res) => {
     try {
       let query = await Categories.findAll({
-        attributes: ["name"],
+        attributes: ["name", "id"],
         order: [["name", "ASC"]],
       });
       return res.status(200).json(query);

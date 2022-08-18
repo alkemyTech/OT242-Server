@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 // import de funciones a correr
-const { insertActivity, updateActivity, getActivyDetail, getActivities } = require('./../../controllers/activitiesController');
+const { insertActivity, updateActivity, getActivyDetail, getActivities, deleteActivity } = require('./../../controllers/activitiesController');
 const { activityValidationRules, validate } = require('../../middlewares/validator');
 
 
@@ -20,6 +20,7 @@ router.post("/",
 router.patch("/:id", activityValidationRules(), validate, updateActivity);
 
 router.get("/:id", getActivyDetail);
+router.delete('/:id', deleteActivity)
 module.exports = router;
 
 
