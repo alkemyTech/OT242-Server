@@ -36,31 +36,8 @@ const updateTestimonial = async (req, res) => {
     res.status(err.status || 500).json({ message: err.message || 'Error al actualizar el testimonio' });
 
   }
-
-
-  /*} catch (err) {
-    res.status(404).json({ message: "No existe un testimonio con ese id" });
-  }*/
 };
 
-/*const updateTestimonial = async (req, res) => {
-  try {
-    let testimonial = await get(req.params.id); // consigo el id que tengo que updatear
-    
-    if (testimonial) {
-      testimonial.name = req.body.name;
-      testimonial.content = req.body.content;
-      testimonial.image = req.body.image;
-      await update(testimonial);
-    }
-    else throw ({message: 'No existe testimonio con este id', status: 404});
-    return res.status(200).json(testimonial);
-  } catch(err) {
-      res.status(err.status || 500).json({ message: err.message || 'Error al actualizar el testimonio' });
-  }
-};*/
-
-export default Header;
 
 const getTestimonials = async (req, res) => {
 

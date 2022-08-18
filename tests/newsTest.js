@@ -149,7 +149,7 @@ describe('News Test', () => {
             .end((err, res) => {
                 res.should.have.status(404);
                 res.body.should.be.a('object');
-                res.body.should.have.property('message').eq('ERROR novedad inexistente');
+                res.body.should.have.property('message').eq('No existe una novedad con este id');
                 done();
             });
     }),
@@ -160,7 +160,7 @@ describe('News Test', () => {
             .delete(path + newId)
             .end((err, res) => {
                 res.body.should.be.a('object');
-                res.body.should.have.property('msg').eq('it was deleted');
+                res.body.should.have.property('msg').eq('Eliminado correctamente');
                 done();
             });
     }),
