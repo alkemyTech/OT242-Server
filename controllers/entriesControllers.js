@@ -38,11 +38,11 @@ const insertEntry = async (req, res, next) => {
 const updateEntry = async (req, res) => {
   const { name, content, categoryId, image } = req.body;
   try {
-    //const results = await UploadImg(req.files);
+    const results = await UploadImg(req.files);
     const updateResult = await Entry.update({
       name,
       content,
-      //image: results[0].key,
+      image: results[0].key,
       image,
       categoryId,
       updateAt: new Date
