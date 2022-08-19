@@ -8,7 +8,7 @@ const insertActivity = (req, res, next) => {
     const activity = Activity.create({
       name,
       content,
-      deletedAt: new Date
+      createdAt: new Date
     });         
     return res.status(202).json({ message: 'Actividad almacenada exitosamente!'});  
   }
