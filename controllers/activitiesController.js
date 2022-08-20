@@ -8,7 +8,7 @@ const insertActivity = (req, res, next) => {
     const activity = Activity.create({
       name,
       content,
-      deletedAt: new Date
+      createdAt: new Date
     });         
     return res.status(202).json({ message: 'Actividad almacenada exitosamente!'});  
   }
@@ -20,7 +20,7 @@ const insertActivity = (req, res, next) => {
 
 
 
-const {getActivities: getAll, getActivity: get, updateActivity:update, getActivity} = require('../services/activities');
+const { getActivity: get, updateActivity:update, getActivity} = require('../services/activities');
 
 const updateActivity = async (req, res) => {
   try {
@@ -48,4 +48,41 @@ const getActivyDetail = async (req, res)=> {
     res.status(400).json(error)
   }
 }
-module.exports = { insertActivity, updateActivity, getActivyDetail } 
+
+const getActivities = async (req, res) => {
+  try {
+      const activities = await Activity.findAll();
+      
+      return res.status(200).json(activities);
+      
+  } catch (error) {
+
+      return res.status(400).json(error);
+      
+  }
+}
+
+const deleteActivity = async (req, res) => {
+  const newsExists = await Activity.findOne({ // find the Activity to be deleted 
+    where: { id: req.params.id },
+  });
+
+  if (newsExists) { // If it exists then delete it
+
+    try {
+
+      await Activity.destroy({ where: { id: req.params.id } })
+      res.json({ msg: 'Eliminado correctamente' });
+
+    } catch (error) {
+      console.log(error)
+
+    }
+  } else {
+
+    return res.json({ msg: 'La novedad no existe' })
+  }
+}
+
+
+module.exports = { insertActivity, updateActivity, getActivyDetail, getActivities, deleteActivity } 

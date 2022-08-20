@@ -6,9 +6,11 @@ const { membersValidationRules, validate } = require('../../middlewares/validato
 
 router.get('/', membersController.listMembers); // List members
 
+router.get("/:id", membersController.getMemberById);
+
 router.post('/', membersValidationRules(), validate, membersController.createMember); //Create member
 
-router.put('/:id', membersValidationRules(), validate, membersController.updateMember);
+router.patch('/:id', membersValidationRules(), validate, membersController.updateMember);
 
 
 /* Eliminacion de miembros */

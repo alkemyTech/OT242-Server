@@ -14,8 +14,8 @@ describe("GET /members", () => {
   });
 });
 
-// PUT
-describe("PUT /members/:id", () => {
+// PATCH
+describe("PATCH /members/:id", () => {
   it("actualiza un miembro existente", (done) => {
 
     const reqBody = {
@@ -24,7 +24,7 @@ describe("PUT /members/:id", () => {
     };
 
     request(app)
-      .put("/admin/members/2")
+      .patch("/admin/members/2")
       .send(reqBody)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -44,7 +44,7 @@ describe("PUT /members/:id", () => {
     };
 
     request(app)
-      .put("/admin/members/2")
+      .patch("/admin/members/2")
       .send(reqBody)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -64,7 +64,7 @@ describe("PUT /members/:id", () => {
     };
 
     request(app)
-      .put("/admin/members/2")
+      .patch("/admin/members/2")
       .send(reqBody)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -84,7 +84,7 @@ describe("PUT /members/:id", () => {
     };
 
     request(app)
-      .put("/admin/members/idinexistente")
+      .patch("/admin/members/idinexistente")
       .send(reqBody)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -156,7 +156,7 @@ describe("DELETE /members", () => {
   it("Elimina un miembro existente", (done) => {
 
     request(app)
-      .delete("/admin/members/22")
+      .delete("/admin/members/10")
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .expect(200)

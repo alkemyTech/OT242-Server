@@ -6,6 +6,8 @@ const createMember = (req, res) => {
             const member = members.create({
                 name: req.body.name,
                 image: req.body.image,
+                role: req.body.role,
+                content: req.body.content,
                 createdAt: new Date
              })
               return res.status(202).json({ message: 'Datos almacenados exitosamente!'});
@@ -35,9 +37,9 @@ const listMembers = async (req, res) => {
 
 const updateMember = async (req, res) => {
     try {
-        const { name, image } = req.body;
+        const { name, image, content,role } = req.body;
         const updateResult = await members.update(
-            { name, image},{
+            { name, image, role, content},{
                 where: { id: req.params.id },
             }
         );
@@ -45,7 +47,7 @@ const updateMember = async (req, res) => {
             throw ({message: 'No existe un miembro con este id', status: 404});
       
           } else {
-            return res.status(200).json({ name, image });
+            return res.status(200).json({ name, image, content, role });
           }
     }
     catch (error) {
@@ -79,8 +81,22 @@ const deleteMember  = async (req, res) => {
   }
 };
 
+const getMemberById = async (req, res)=> {
+  const {id} = req.params
+  try{
+    const query = await members.findOne({ // search member via id 
+      where: { id },
+    });
+
+    res.status(200).json(query)
+    
+  }catch(error){
+
+    res.status(400).json(error)
+  }
+}
 
 
-module.exports = { createMember, listMembers, updateMember, deleteMember }; 
+module.exports = { createMember, listMembers, updateMember, deleteMember, getMemberById }; 
 
 
