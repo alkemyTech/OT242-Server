@@ -13,7 +13,6 @@ const entryValidationRules = () => {
   return [
     body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
     body('content').exists().withMessage('content undefined').not().isEmpty().withMessage('Inserte una descripcion'),
-    body('image').exists().withMessage('Image undefined').not().isEmpty().withMessage('Inserte una imagen'),
     body('categoryId').exists().withMessage('categoryId undefined').not().isEmpty().withMessage('Indique la categoria'),
   ]
 };
@@ -34,7 +33,6 @@ const contactsValidationRules = () => {
 const testimonialsValidationRules = () => {
   return [
     body('name').exists().withMessage('Name undefined').not().isEmpty().withMessage('Campo nombre vacio'),
-    body('image').exists().withMessage('Image undefined').not().isEmpty().withMessage('Inserte una imagen'),
     body('content').exists().withMessage('Content undefined').not().isEmpty().withMessage('Campo contenido vacio'),
   ]
 }

@@ -3,12 +3,13 @@ const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Servic
 
 
 const insertActivity = async (req, res, next) => {
-  const { name, content } = req.body;
+  const { name, content, image } = req.body;
 
   try {
     const results = await UploadImg(req.files);
     const activity = Activity.create({
       image: results[0].key, 
+      image,
       name,
       content,
       createdAt: new Date
@@ -45,12 +46,17 @@ const updateActivity = async (req, res) => {
 const getActivyDetail = async (req, res)=> {
   const {id} = req.params
   try{
-    const query = await getActivity(id)
+    const query = await Activity.findOne({where: {id}
+    });
+    if(!query || query == null) {
+          
+      return res.status(404).json({message: 'La actividad solicitada no existe'})
+  }
     res.status(200).json(query)
-    
-  }catch(error){
 
-    res.status(400).json(error)
+  }catch(err){
+
+    res.status(400).json(err)
   }
 }
 
