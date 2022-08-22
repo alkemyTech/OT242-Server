@@ -1,7 +1,7 @@
 const { Testimonials } = require("../models");
 
 
-const createTestimonial = async (req, res, next) => {
+const createTestimony = async (req, res, next) => {
   const { name, image, content } = req.body;
 
   try {
@@ -14,7 +14,7 @@ const createTestimonial = async (req, res, next) => {
 };
 
 
-const updateTestimonial = async (req, res) => {
+const updateTestimony = async (req, res) => {
 
   try { 
     const { name, image, content } = req.body;
@@ -55,4 +55,43 @@ const getTestimonials = async (req, res) => {
   
 };
 
-module.exports = { createTestimonial, updateTestimonial, getTestimonials };
+const testimonyDetail = async (req, res) => {
+
+  try {
+
+    let query = await Testimonials.findOne({where: {id: req.params.id}});
+
+    return res.status(200).json(query);
+
+  } catch (err) {
+
+    res.status(400).json(err);
+
+  }
+  
+};
+
+const deleteTestimony = async (req, res) => {
+  const testimonyExists = await Testimonials.findOne({  
+    where: { id: req.params.id },
+  });
+
+  if (testimonyExists) { // If it exists then delete it
+
+    try {
+
+      await Testimonials.destroy({ where: { id: req.params.id } })
+      return res.json({ msg: 'Eliminado correctamente' });
+
+    } catch (error) {
+      console.log(error)
+
+    }
+  } else {
+
+    return res.json({ msg: 'El testimonio no existe' })
+  }
+};
+
+
+module.exports = { createTestimony, updateTestimony, getTestimonials, testimonyDetail, deleteTestimony };
