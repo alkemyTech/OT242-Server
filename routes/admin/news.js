@@ -12,10 +12,9 @@ router.get(
 
 router.get('/:id', findEntry);
 
-router.post('/',
+router.post('/', upload.array("image"),
   entryValidationRules(),
-  validate, 
-  upload.array("image"),
+  validate,   
   insertEntry
   );
 

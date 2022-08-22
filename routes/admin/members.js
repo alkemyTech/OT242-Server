@@ -9,7 +9,7 @@ router.get('/', membersController.listMembers); // List members
 
 router.get("/:id", membersController.getMemberById);
 
-router.post('/', membersValidationRules(), validate,  upload.array("image"), membersController.createMember); //Create member
+router.post('/', upload.array("image"), membersValidationRules(), validate,  membersController.createMember); //Create member
 
 router.patch('/:id', upload.array("image"), membersController.updateMember);
 

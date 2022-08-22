@@ -5,16 +5,19 @@ const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Servic
 const createMember = async (req, res) => {
 
   console.log(req.body)
-  
-        try {
-            const results = await UploadImg(req.files);
-            const member = members.create({
-                name: req.body.name,
+
+  const data = {name: req.body.name,
                 role: req.body.role,
-                image: results[0].key,
                 content: req.body.content,
                 createdAt: new Date
-             })
+              }
+        try {
+            const results = await UploadImg(req.files);
+            if(results.length > 0){
+              data.image = results[0].key
+            }
+            const member = members.create(data)
+
               return res.status(202).json({ message: 'Datos almacenados exitosamente!'});
 
         }
@@ -41,15 +44,25 @@ const listMembers = async (req, res) => {
 }
 
 const updateMember = async (req, res) => {
+
+  const data = {name: req.body.name,
+                role: req.body.role,
+                content: req.body.content,
+                updateAt: new Date
+  }
   console.log(req.body)
     try {
         const results = await UploadImg(req.files);
-        const { name, content,role } = req.body;
+
+        if(results.length > 0) {
+          data.image = results[0].key
+        }
         const updateResult = await members.update(
-            { name, image: results[0].key, role, content},{
+            data, {
                 where: { id: req.params.id },
             }
-        );
+        )
+
         if(updateResult[0] === 0) {
             throw ({message: 'No existe un miembro con este id', status: 404});
       
