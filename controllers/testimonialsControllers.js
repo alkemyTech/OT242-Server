@@ -4,12 +4,18 @@ const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Servic
 
 
 const createTestimony = async (req, res, next) => {
-  const { name, content } = req.body;
-              
 
-  try {
-    const results = await UploadImg(req.files);
-    Testimonials.create({ name, image: results[0].key, content });
+  const data = {name: req.body.name,
+                content: req.body.content,
+                updateAt: new Date
+  }
+try {
+const results = await UploadImg(req.files);
+if(results.length > 0){
+  data.image = results[0].key
+}
+              
+    Testimonials.create(data);
     return res.status(200).json({ message: "Testimonial added." });
 
   } catch (err) {
@@ -20,12 +26,18 @@ const createTestimony = async (req, res, next) => {
 
 const updateTestimony = async (req, res) => {
 
-  try { 
-    const { name, content } = req.body;
-    const results = await UploadImg(req.files);
+  const data = {name: req.body.name,
+    content: req.body.content,
+    createdAt: new Date
+}
+try {
+const results = await UploadImg(req.files);
+if(results.length > 0){
+data.image = results[0].key
+}
 
     const updateResult = await Testimonials.update(
-      { name, image: results[0].key, content }, {
+      data , {
         where: { id: req.params.id },
       }
     );
