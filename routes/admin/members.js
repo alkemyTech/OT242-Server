@@ -1,4 +1,5 @@
 const express = require("express");
+const {upload} = require('../../s3Services/s3');
 
 const router = express.Router();
 const membersController = require('../../controllers/membersController');
@@ -8,9 +9,9 @@ router.get('/', membersController.listMembers); // List members
 
 router.get("/:id", membersController.getMemberById);
 
-router.post('/', membersValidationRules(), validate, membersController.createMember); //Create member
+router.post('/', membersValidationRules(), validate,  upload.array("image"), membersController.createMember); //Create member
 
-router.patch('/:id', membersController.updateMember);
+router.patch('/:id', upload.array("image"), membersController.updateMember);
 
 
 /* Eliminacion de miembros */
