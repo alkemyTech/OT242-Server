@@ -1,11 +1,15 @@
 const { Testimonials } = require("../models");
+const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Services/s3');
+
 
 
 const createTestimony = async (req, res, next) => {
-  const { name, image, content } = req.body;
+  const { name, content } = req.body;
+              
 
   try {
-    Testimonials.create({ name, image, content });
+    const results = await UploadImg(req.files);
+    Testimonials.create({ name, image: results[0].key, content });
     return res.status(200).json({ message: "Testimonial added." });
 
   } catch (err) {
@@ -17,10 +21,11 @@ const createTestimony = async (req, res, next) => {
 const updateTestimony = async (req, res) => {
 
   try { 
-    const { name, image, content } = req.body;
+    const { name, content } = req.body;
+    const results = await UploadImg(req.files);
 
     const updateResult = await Testimonials.update(
-      { name, image, content }, {
+      { name, image: results[0].key, content }, {
         where: { id: req.params.id },
       }
     );
