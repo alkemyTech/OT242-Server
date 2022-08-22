@@ -1,11 +1,14 @@
 const { Activity } = require('../models');
+const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Services/s3');
 
 
-const insertActivity = (req, res, next) => {
+const insertActivity = async (req, res, next) => {
   const { name, content } = req.body;
 
   try {
+    const results = await UploadImg(req.files);
     const activity = Activity.create({
+      image: results[0].key, 
       name,
       content,
       createdAt: new Date
@@ -24,8 +27,10 @@ const { getActivity: get, updateActivity:update, getActivity} = require('../serv
 
 const updateActivity = async (req, res) => {
   try {
+    const results = await UploadImg(req.files);
     let activity = await get(req.params.id);
     if (activity) {
+      activity.image =  results[0].key;
       activity.name = req.body.name;
       activity.content = req.body.content;
       await update(activity);

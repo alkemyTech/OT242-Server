@@ -14,14 +14,14 @@ router.get('/:id', findEntry);
 
 router.post('/',
   entryValidationRules(),
-  validate,
+  validate, 
   upload.array("image"),
   insertEntry
   );
 
 router.delete('/:id', deleteEntry)
 
-router.put('/:id', updateEntry);
+router.put('/:id',   upload.array("image"), updateEntry);
 
 
 module.exports = router;

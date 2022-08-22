@@ -1,12 +1,17 @@
 const {members} = require('../models');
+const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Services/s3');
 
 
-const createMember = (req, res) => {
+const createMember = async (req, res) => {
+
+  console.log(req.body)
+  
         try {
+            const results = await UploadImg(req.files);
             const member = members.create({
                 name: req.body.name,
-                image: req.body.image,
                 role: req.body.role,
+                image: results[0].key,
                 content: req.body.content,
                 createdAt: new Date
              })
@@ -36,10 +41,12 @@ const listMembers = async (req, res) => {
 }
 
 const updateMember = async (req, res) => {
+  console.log(req.body)
     try {
-        const { name, image, content,role } = req.body;
+        const results = await UploadImg(req.files);
+        const { name, content,role } = req.body;
         const updateResult = await members.update(
-            { name, image, role, content},{
+            { name, image: results[0].key, role, content},{
                 where: { id: req.params.id },
             }
         );
