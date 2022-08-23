@@ -10,18 +10,30 @@ const getAllEntries = async (req, res) => {
   }
 };
 
-const insertEntry = async (req, res) => {
-  const { name, content, categoryId } = req.body;
+
+const getNews = async (req, res, next) => {
   try {
-    const results = await UploadImg(req.files);
-    const entry = Entry.create({
-      name,
-      content,
-      image: results[0].key,
-      categoryId,
-      type: 'news',
-      createdAt: new Date
-    })
+    const news = await getEntries(['type'], ['news'], ['id', 'name', 'image', 'createdAt']);
+    console.log(news)
+    return res.status(200).json(news);
+  } catch (err) {
+    next(err);
+  }
+}
+const insertEntry = async (req, res, next) => {
+
+  const data = {name: req.body.name,
+                content: req.body.content,
+                categoryId: req.body.categoryId,
+                createdAt: new Date
+  }
+try {
+const results = await UploadImg(req.files);
+if(results.length > 0){
+  data.image = results[0].key
+}
+
+    const entry = Entry.create(data)
     return res.status(202).json({ message: 'Datos almacenados exitosamente!' });
   } catch (err) {
     res.status(404).json({ message: "ERROR intentelo mas tarde" });
@@ -29,16 +41,19 @@ const insertEntry = async (req, res) => {
 };
 
 const updateEntry = async (req, res) => {
-  const { name, content, categoryId } = req.body;
-  const results = await UploadImg(req.files);
-  try {
-    await Entry.update({
-      name,
-      content,
-      image: results[0].key,
-      categoryId,
-      updateAt: new Date
-    }, {
+  const data = {
+                name: req.body.name,
+                content: req.body.content,
+                categoryId: req.body.categoryId,
+                updateAt: new Date
+              }
+try {
+const results = await UploadImg(req.files);
+if(results.length > 0){
+data.image = results[0].key
+}
+
+    const updateResult = await Entry.update(data, {
       where: { id: req.params.id },
     });
     if(updatedEntry != "") {

@@ -21,6 +21,7 @@ const testimonialsRouter = require('./routes/testimonials');
 const userRouter = require('./routes/admin/users');
 const categoriesRouter = require('./routes/categories');
 const membersRouter = require('./routes/admin/members');
+const rolesRouter = require('./routes/admin/roles');
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use('/testimonials', testimonialsRouter);
 app.use('/users', userRouter);
 app.use('/categories', categoriesRouter);
 app.use('/admin/members', membersRouter);
+app.use('/admin/roles', rolesRouter);
 
 app.use('/docs',swaggerUi.serve, swaggerUi.setup(specs))
 
