@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { getEntries, insertEntry, deleteEntry, getNews, updateEntry, findEntry, getAllEntries } = require("../../controllers/entriesControllers");
+const { insertEntry, deleteEntry, getNews, updateEntry, findEntry, getAllEntries } = require("../../controllers/entriesControllers");
 const { entryValidationRules, validate } = require('../../middlewares/validator');
 const {upload} = require('../../s3Services/s3');
 

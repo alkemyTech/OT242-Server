@@ -1,10 +1,13 @@
 const { Entry } = require('../models');
-const { getEntries } = require('../services/getEntries');
 const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Services/s3');
 
-const getAllEntries = async (req, res, next) => {
-  const query = await Entry.findAll();
-  return res.status(200).json(query);
+const getAllEntries = async (req, res) => {
+  try{
+    const query = await Entry.findAll();
+    return res.status(200).json(query);
+  }catch{
+    res.status(404).json({ message: "Something went wrong" });
+  }
 };
 
 
@@ -53,14 +56,15 @@ data.image = results[0].key
     const updateResult = await Entry.update(data, {
       where: { id: req.params.id },
     });
-    if(updateResult[0] === 0) {
-      throw ({message: 'No existe una novedad con este id', status: 404});
+    if(updatedEntry != "") {
+      // Si el entry existe responde con el entry actualizado
+      res.status(200).json({ message: "OK novedad actualizada", novedad: updatedEntry[0] });
 
     } else {
-      return res.status(200).json({ message: "OK novedad actualizada", novedad: updateResult[0] });
+      throw new Error(); // si el entry no existe levanta un error
     }
   } catch (err) {
-    res.status(404).json({ message: "ERROR intentelo mas tarde" });
+    res.status(404).json({ message: "ERROR novedad inexistente" });
   }
 };
 
@@ -73,8 +77,8 @@ const deleteEntry = async (req, res) => {
 
     try {
 
-      await Entry.destroy({ where: { id: req.params.id } })
-      res.json({ msg: 'Eliminado correctamente' });
+      await Entry.destroy({where: { id: req.params.id}})
+      res.json({msg: 'it was deleted'})
 
     } catch (error) {
       console.log(error)
@@ -82,24 +86,29 @@ const deleteEntry = async (req, res) => {
     }
   } else {
 
-    return res.json({ msg: 'La novedad no existe' })
+    return res.json({msg: 'the news does not exist'})
   }
 }
 
 const findEntry = async (req, res) => {
   const id = req.params.id
   try {
-    const entries = await Entry.findOne({ where: { id } })
-    console.log(entries)
-    return res.json(entries)
+    const entry = await Entry.findOne({where: { id }})
 
+    if(entry != null){
+      return res.status(200).json(entry)
+    }else{
+      return res.status(404).json({ message: 'Novedad no existe' })
+    }
+    
+   
   } catch (err) {
-    console.log(err)
-    return res.status(500).json({ error: 'ERROR intentelo mas tarde' })
+    return res.status(404).json({ error: 'Something went wrong' })
+
   }
 }
 
 
 
 
-module.exports = { getEntries, insertEntry, updateEntry, getNews, deleteEntry, findEntry, getAllEntries }
+module.exports = { insertEntry, updateEntry, deleteEntry, findEntry, getAllEntries }
