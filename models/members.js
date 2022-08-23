@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   members.init({
     name: DataTypes.STRING,
-    image: DataTypes.STRING
+    image: DataTypes.STRING,
+    role: DataTypes.STRING,
+    content: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'members',

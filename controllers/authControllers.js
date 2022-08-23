@@ -73,6 +73,7 @@ const deleteUser = async (req, res) => {
     return res.status(400).json({message: 'Error. Intentelo mas tarde'})  
   }
   return res.status(404).json({message: 'El usuario no fue encontrado'})
+
 }
 
 module.exports = {

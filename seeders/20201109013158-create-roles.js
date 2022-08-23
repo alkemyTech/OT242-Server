@@ -11,6 +11,12 @@ module.exports = {
       },
       {
         name: 'Standard',
+        description: 'Usuario standard',
+        createdAt: new Date,
+        updatedAt: new Date
+      },
+      {
+        name: 'Regular',
         description: 'Usuario regular',
         createdAt: new Date,
         updatedAt: new Date

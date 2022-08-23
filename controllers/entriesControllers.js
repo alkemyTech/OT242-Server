@@ -1,100 +1,101 @@
-const {Entry} = require('../models');
-const {getEntries} = require('../services/getEntries');
+const { Entry } = require('../models');
+const { getEntries } = require('../services/getEntries');
+const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Services/s3');
 
 const getAllEntries = async (req, res, next) => {
-        const query = await Entry.findAll();
-        return res.status(200).json(query);
-  };
+  const query = await Entry.findAll();
+  return res.status(200).json(query);
+};
 
 
-const getNews = async (req,res,next) => {
-  try{
+const getNews = async (req, res, next) => {
+  try {
     const news = await getEntries(['type'], ['news'], ['id', 'name', 'image', 'createdAt']);
     console.log(news)
     return res.status(200).json(news);
-  }catch(err){
+  } catch (err) {
     next(err);
   }
 }
+const insertEntry = async (req, res, next) => {
 
-
-const insertEntry = (req, res, next) => {
-       const { name, content, image, categoryId } = req.body;
-
-        try {
-       
-            const entry = Entry.create({
-                name,
-                content,
-                image,
-                categoryId,
-                type:'news',
+  const data = {name: req.body.name,
+                content: req.body.content,
+                categoryId: req.body.categoryId,
                 createdAt: new Date
-             })
-                     
-              return res.status(202).json({ message: 'Datos almacenados exitosamente!'});
-            
-        }
-    
-        catch (error) {
-            return res.status(400).json(error);
-    
-        };
-    };
+  }
+try {
+const results = await UploadImg(req.files);
+if(results.length > 0){
+  data.image = results[0].key
+}
+
+    const entry = Entry.create(data)
+    return res.status(202).json({ message: 'Datos almacenados exitosamente!' });
+  } catch (err) {
+    res.status(404).json({ message: "ERROR intentelo mas tarde" });
+  }
+};
 
 const updateEntry = async (req, res) => {
-    try {
-      await Entry.update(req.body, {
-        where: { id: req.params.id },
-      });
-  
-      const updatedEntry = await Entry.findAll({ // busca el entry actualizado
-        where: { id: req.params.id },
-      });
-      if (updatedEntry != "") {
-        // Si el entry existe responde con el entry actualizado
-        res.status(200).json({ message: "OK novedad actualizada", novedad: updatedEntry[0] });
-      } else {
-        throw new Error(); // si el entry no existe levanta un error
-      }
-    } catch (err) {
-      res.status(404).json({ message: "ERROR novedad inexistente" });
-    }
-  };
+  const data = {
+                name: req.body.name,
+                content: req.body.content,
+                categoryId: req.body.categoryId,
+                updateAt: new Date
+              }
+try {
+const results = await UploadImg(req.files);
+if(results.length > 0){
+data.image = results[0].key
+}
 
-
-  const deleteEntry  = async (req, res) => {
-    const newsExists = await Entry.findOne({ // find the entry to be deleted 
+    const updateResult = await Entry.update(data, {
       where: { id: req.params.id },
     });
+    if(updateResult[0] === 0) {
+      throw ({message: 'No existe una novedad con este id', status: 404});
 
-      if(newsExists) { // If it exists then delete it
+    } else {
+      return res.status(200).json({ message: "OK novedad actualizada", novedad: updateResult[0] });
+    }
+  } catch (err) {
+    res.status(404).json({ message: "ERROR intentelo mas tarde" });
+  }
+};
 
-      try {
+const deleteEntry = async (req, res) => {
+  const newsExists = await Entry.findOne({ // find the entry to be deleted 
+    where: { id: req.params.id },
+  });
 
-        await Entry.destroy({where: { id: req.params.id}})
-        res.json({msg: 'it was deleted'})
-        
-      } catch (error) {
-        console.log(error)
-        
-      }
-    }else{
-      
-      return res.json({msg: 'the news does not exist'})
+  if (newsExists) { // If it exists then delete it
+
+    try {
+
+      await Entry.destroy({ where: { id: req.params.id } })
+      res.json({ msg: 'Eliminado correctamente' });
+
+    } catch (error) {
+      console.log(error)
+
+    }
+  } else {
+
+    return res.json({ msg: 'La novedad no existe' })
   }
 }
 
 const findEntry = async (req, res) => {
   const id = req.params.id
   try {
-    const entries = await Entry.findOne({where: { id }})
+    const entries = await Entry.findOne({ where: { id } })
     console.log(entries)
     return res.json(entries)
-   
+
   } catch (err) {
     console.log(err)
-    return res.status(500).json({ error: 'Something went wrong' })
+    return res.status(500).json({ error: 'ERROR intentelo mas tarde' })
   }
 }
 
