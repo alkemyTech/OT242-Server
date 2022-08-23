@@ -1,15 +1,23 @@
 const {members} = require('../models');
+const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Services/s3');
 
 
-const createMember = (req, res) => {
-        try {
-            const member = members.create({
-                name: req.body.name,
-                image: req.body.image,
+const createMember = async (req, res) => {
+
+  console.log(req.body)
+
+  const data = {name: req.body.name,
                 role: req.body.role,
                 content: req.body.content,
                 createdAt: new Date
-             })
+              }
+        try {
+            const results = await UploadImg(req.files);
+            if(results.length > 0){
+              data.image = results[0].key
+            }
+            const member = members.create(data)
+
               return res.status(202).json({ message: 'Datos almacenados exitosamente!'});
 
         }
@@ -36,13 +44,25 @@ const listMembers = async (req, res) => {
 }
 
 const updateMember = async (req, res) => {
+
+  const data = {name: req.body.name,
+                role: req.body.role,
+                content: req.body.content,
+                updateAt: new Date
+  }
+  console.log(req.body)
     try {
-        const { name, image, content,role } = req.body;
+        const results = await UploadImg(req.files);
+
+        if(results.length > 0) {
+          data.image = results[0].key
+        }
         const updateResult = await members.update(
-            { name, image, role, content},{
+            data, {
                 where: { id: req.params.id },
             }
-        );
+        )
+
         if(updateResult[0] === 0) {
             throw ({message: 'No existe un miembro con este id', status: 404});
       
