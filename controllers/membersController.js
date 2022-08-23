@@ -89,7 +89,7 @@ const deleteMember  = async (req, res) => {
         
       try {
         await members.destroy({where: { id: memberId}});
-        res.json({msg: 'member with id:' + memberId + ' has been deleted'});
+        res.status(200).json({msg: 'member with id:' + memberId + ' has been deleted'});
         
       } catch (error) {
         console.log(error);
@@ -97,7 +97,7 @@ const deleteMember  = async (req, res) => {
 
     } else {
       
-      return res.json({msg: 'There is no member with id:' + memberId})
+      return res.status(400).json({msg: 'There is no member with id:' + memberId})
   }
 };
 
