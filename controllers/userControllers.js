@@ -1,4 +1,5 @@
 const {User} = require('../models');
+const { UploadImg, upload, VerifyMulterError, deleteImg } = require('../s3Services/s3');
 
 const usersList = async (req, res) => {
     try {
@@ -53,15 +54,28 @@ const deleteUser = async (req, res) => {
 
 
   const updateUser = async (req, res) => {
+    const data = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      updateAt: new Date
+}
+console.log(req.body)
+try {
+const results = await UploadImg(req.files);
 
-  try {
-      const updateResult = await User.update(
-        {roleId: req.body.roleId} , {
+if(results.length > 0) {
+data.image = results[0].key
+}
+
+      const updateResult = await User.update( data,
+        {
           where: { id: req.params.id },
         }
       );
   
       return res.status(200).json({ updateResult, msg: 'Rol actualizado' });
+
+
       
   
     } catch(err) {
