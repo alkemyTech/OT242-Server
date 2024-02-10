@@ -28,7 +28,7 @@ const register = (req, res, next) => {
 }
 
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res) => { 
   const {email, password} = req.body
 
   try {
@@ -62,19 +62,18 @@ const loginUser = async (req, res) => {
 
 }
 
-const deleteUser = async (req, res) => {
-  const {id} = req.params;
+const deleteUser = async (req, res) => { 
+  const {id} = req.params
   try {
       const deletedUser = await User.destroy({where: {id}})
-      console.log(deletedUser);
       if(deletedUser==1) {
-          return res.status(200).json({message: 'El usuario fué eliminado correctamente'})
-      }
-       
+        return res.status(200).json({message: 'El usuario fué eliminado correctamente'})
+    }
   } catch (error) {
-    return res.status(400).json({message: 'Error. Intentelo mas tarde'})
+    return res.status(400).json({message: 'Error. Intentelo mas tarde'})  
   }
-return res.status(404).json({message: 'El usuario no fue encontrado'})
+  return res.status(404).json({message: 'El usuario no fue encontrado'})
+
 }
 
 module.exports = {
